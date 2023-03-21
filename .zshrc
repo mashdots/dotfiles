@@ -23,6 +23,7 @@ for i in "${PATHARRAY[@]}"; do
 done
 
 eval "$(pyenv init -)"
+unalias delete-codespace
 
 # ------------------------------------------------------ Aliases -------------------------------------------------------
 
@@ -54,4 +55,13 @@ commit() { # <-- Wrapper for git commit with a message for the current branch
   else
     echo "you need to append a commit message"
   fi
+}
+
+delete-codespace() {
+  printf "$fg[green]Delete$reset_color this codespace? (y to confirm)?\n‣ "
+
+  read response
+
+  [[ $response = "y" ]] && gh cs delete -c $CODESPACE_NAME
+
 }
