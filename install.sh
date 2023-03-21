@@ -10,7 +10,7 @@ zshrc() {
     echo "                     installing theme                      "
     echo "-----------------------------------------------------------"
     git clone --depth=1 https://github.com/mashdots/schminitz-v2.git
-    cp schminitz-v2/schminitz-v2.zsh-theme ~/.oh-my-zsh/themes/schminitz-v2
+    cp schminitz-v2/schminitz-v2.zsh-theme ~/.oh-my-zsh/themes/schminitz-v2.zsh-theme
 
     echo "==========================================================="
     echo "                       cloning pyenv                       "
