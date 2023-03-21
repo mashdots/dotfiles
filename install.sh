@@ -4,12 +4,13 @@ zshrc() {
     echo "==========================================================="
     echo "                cloning zsh-autosuggestions                "
     echo "-----------------------------------------------------------"
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/plugins/zsh-autosuggestions
 
     echo "==========================================================="
-    echo "                       cloning theme                       "
+    echo "                     installing theme                      "
     echo "-----------------------------------------------------------"
-    git clone --depth=1 https://github.com/mashdots/schminitz-v2.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/schminitz-v2
+    git clone --depth=1 https://github.com/mashdots/schminitz-v2.git
+    cp schminitz-v2/schminitz-v2.zsh-theme ~/.oh-my-zsh/themes/schminitz-v2
 
     echo "==========================================================="
     echo "                       cloning pyenv                       "
@@ -17,7 +18,7 @@ zshrc() {
     git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 
     echo "==========================================================="
-    echo "                       Import zshrc                        "
+    echo "                       import zshrc                        "
     echo "-----------------------------------------------------------"
     cp .zshrc $HOME/.zshrc
 }
