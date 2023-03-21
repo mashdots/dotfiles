@@ -1,5 +1,7 @@
 # ------------------------------------------------------ Exports -------------------------------------------------------
-
+ZSH_THEME="schminitz-v2"
+plugins=(git macos npm node sudo wd vscode)
+export ZSH=$HOME/.oh-my-zsh
 # ------------------------------------------------------ Aliases -------------------------------------------------------
 
 alias thisBranch="git branch | grep '^\*' | cut -d' ' -f2" #        shows text for current branch of current directory #
