@@ -57,6 +57,15 @@ commit() { # <-- Wrapper for git commit with a message for the current branch
   fi
 }
 
+function goodbye {
+  printf "$fg[green]Delete$reset_color this codespace? (y to confirm)?\n‣ "
+
+  read response
+
+  [[ $response = "y" ]] && gh cs delete -c $CODESPACE_NAME
+
+}
+
 delete-codespace() {
   printf "$fg[green]Delete$reset_color this codespace? (y to confirm)?\n‣ "
 
