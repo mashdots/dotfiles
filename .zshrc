@@ -30,6 +30,7 @@ unalias delete-codespace
 alias thisBranch="git branch | grep '^\*' | cut -d' ' -f2" #        shows text for current branch of current directory #
 alias darker="python -mdarker --config ./pyproject.toml --isort --revision master... src/aplaceforrover"
 alias prs="gh pr list --author mashdots" #                                               list my current PRs in Github #
+alias mypy=`dc run --workdir /web --rm --no-deps web mypy --show-error-codes src/aplaceforrover` #            run mypy #
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
