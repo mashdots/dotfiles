@@ -49,6 +49,10 @@ fi
 
 # ----------------------------------------------------- Functions ------------------------------------------------------
 
+update-staging() { # <-- Wrapper for git push to staging
+  git push --force origin `thisBranch`:staging-josh
+}
+
 commit() { # <-- Wrapper for git commit with a message for the current branch
   local message="$*"
   if ((${#message} > 0)); then
