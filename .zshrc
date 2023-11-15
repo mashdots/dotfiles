@@ -12,7 +12,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 export PRE_COMMIT_ENABLED=true
 
 export PATHARRAY=(
-  "$PYENV_ROOT/bin:$PATH"
+  "$PYENV_ROOT/bin"
   "/bin/bash"
   "$HOME/.local/bin"
 )
@@ -24,7 +24,6 @@ for i in "${PATHARRAY[@]}"; do
 done
 
 eval "$(pyenv init -)"
-unalias delete-codespace
 
 # ------------------------------------------------------ Aliases -------------------------------------------------------
 
@@ -74,7 +73,6 @@ function goodbye {
   read response
 
   [[ $response = "y" ]] && gh cs delete -c $CODESPACE_NAME
-
 }
 
 update-staging() { # <-- Wrapper for git push to staging
