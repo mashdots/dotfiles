@@ -69,9 +69,8 @@ function darker() { # <-- Wrapper for darker and iSort
 
 function goodbye {
   printf "$fg[green]Delete$reset_color this codespace? (y to confirm)?\n‣ "
-
   read response
-
+  # TODO: Do we need this? Or can we just wrap the gh cs command in this function without the prompt?
   [[ $response = "y" ]] && gh cs delete -c $CODESPACE_NAME
 }
 
@@ -83,9 +82,9 @@ update-branch(){ # <-- Update the current branch with the latest changes from ma
   local CURRENT_BRANCH=`thisBranch`
   local MASTER="master"
 
+  git checkout $MASTER && git pull
+
   if [[ $CURRENT_BRANCH != $MASTER ]]; then
-    git checkout $MASTER && git pull && git checkout $CURRENT_BRANCH && git rebase -i origin/master
-  else
-    printf "$fg[red]you can't update the master branch$reset_color\n"
+    git checkout $CURRENT_BRANCH && git rebase -i origin/master
   fi
 }
