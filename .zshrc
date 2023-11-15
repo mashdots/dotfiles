@@ -50,10 +50,6 @@ fi
 
 # ----------------------------------------------------- Functions ------------------------------------------------------
 
-update-staging() { # <-- Wrapper for git push to staging
-  git push --force origin `thisBranch`:staging-josh
-}
-
 commit() { # <-- Wrapper for git commit with a message for the current branch
   local message="$*"
   if ((${#message} > 0)); then
@@ -61,6 +57,15 @@ commit() { # <-- Wrapper for git commit with a message for the current branch
   else
     echo "you need to append a commit message"
   fi
+}
+
+delete-codespace() {
+  printf "$fg[green]Delete$reset_color this codespace? (y to confirm)?\n‣ "
+
+  read response
+
+  [[ $response = "y" ]] && gh cs delete -c $CODESPACE_NAME
+
 }
 
 function goodbye {
@@ -72,11 +77,17 @@ function goodbye {
 
 }
 
-delete-codespace() {
-  printf "$fg[green]Delete$reset_color this codespace? (y to confirm)?\n‣ "
+update-staging() { # <-- Wrapper for git push to staging
+  git push --force origin `thisBranch`:staging-josh
+}
 
-  read response
+update-branch(){ # <-- Update the current branch with the latest changes from master
+  local CURRENT_BRANCH=`thisBranch`
+  local MASTER="master"
 
-  [[ $response = "y" ]] && gh cs delete -c $CODESPACE_NAME
-
+  if [[ $CURRENT_BRANCH != $MASTER ]]; then
+    git checkout $MASTER && git pull && git checkout $CURRENT_BRANCH && git rebase -i origin/master
+  else
+    printf "$fg[red]you can't update the master branch$reset_color\n"
+  fi
 }
