@@ -29,7 +29,6 @@ unalias delete-codespace
 # ------------------------------------------------------ Aliases -------------------------------------------------------
 
 alias thisBranch="git branch | grep '^\*' | cut -d' ' -f2" #        shows text for current branch of current directory #
-alias darker="python -mdarker --config ./pyproject.toml --isort --revision master... src/aplaceforrover"
 alias prs="gh pr list --author mashdots" #                                               list my current PRs in Github #
 alias mypy=`dc run --workdir /web --rm --no-deps web mypy --show-error-codes src/aplaceforrover` #            run mypy #
 
@@ -59,13 +58,14 @@ commit() { # <-- Wrapper for git commit with a message for the current branch
   fi
 }
 
-delete-codespace() {
-  printf "$fg[green]Delete$reset_color this codespace? (y to confirm)?\n‣ "
+function darker() { # <-- Wrapper for darker and iSort
+  # TODO: Add mypy support
+  local changed_files=($(git diff --name-only))
 
-  read response
-
-  [[ $response = "y" ]] && gh cs delete -c $CODESPACE_NAME
-
+  for file in "${changed_files[@]}"; do
+    isort --settings ./pyproject.toml $file
+    black --config ./pyproject.toml $file
+  done
 }
 
 function goodbye {
