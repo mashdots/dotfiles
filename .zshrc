@@ -30,7 +30,6 @@ eval "$(pyenv init -)"
 alias thisBranch="git branch | grep '^\*' | cut -d' ' -f2" #        shows text for current branch of current directory #
 alias prs="gh pr list --author mashdots" #                                               list my current PRs in Github #
 alias mypy=`dc run --workdir /web --rm --no-deps web mypy --show-error-codes src/aplaceforrover` #            run mypy #
-alias db=`rebuild db_replica` #                                                                     rebuild db_replica #
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
@@ -66,6 +65,10 @@ function darker() { # <-- Wrapper for darker and iSort
     isort --settings ./pyproject.toml $file
     black --config ./pyproject.toml $file
   done
+}
+
+function db() { # <-- Wrapper for rebuild db_replica
+  rebuild db_replica
 }
 
 function goodbye {
