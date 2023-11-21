@@ -30,6 +30,7 @@ eval "$(pyenv init -)"
 alias thisBranch="git branch | grep '^\*' | cut -d' ' -f2" #        shows text for current branch of current directory #
 alias prs="gh pr list --author mashdots" #                                               list my current PRs in Github #
 alias mypy=`dc run --workdir /web --rm --no-deps web mypy --show-error-codes src/aplaceforrover` #            run mypy #
+alias db=`rebuild db_replica` #                                                                     rebuild db_replica #
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
@@ -48,7 +49,7 @@ fi
 
 # ----------------------------------------------------- Functions ------------------------------------------------------
 
-commit() { # <-- Wrapper for git commit with a message for the current branch
+function commit() { # <-- Wrapper for git commit with a message for the current branch
   local message="$*"
   if ((${#message} > 0)); then
     git commit -m "[`thisBranch`] $message"
@@ -74,11 +75,11 @@ function goodbye {
   [[ $response = "y" ]] && gh cs delete -c $CODESPACE_NAME
 }
 
-update-staging() { # <-- Wrapper for git push to staging
+function update-staging() { # <-- Wrapper for git push to staging
   git push --force origin `thisBranch`:staging-josh
 }
 
-update-branch(){ # <-- Update the current branch with the latest changes from master
+function update-branch(){ # <-- Update the current branch with the latest changes from master
   local CURRENT_BRANCH=`thisBranch`
   local MASTER="master"
 
