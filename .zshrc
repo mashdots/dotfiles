@@ -48,6 +48,14 @@ fi
 
 # ----------------------------------------------------- Functions ------------------------------------------------------
 
+function blacken() {
+  if [[ -f $1 ]]; then
+    black --config ./pyproject.toml $1
+  else
+    printf "$fg[red]WHOOPS$reset_color - you need to provide a file to format.\n"
+  fi
+}
+
 function commit() { # <-- Wrapper for git commit with a message for the current branch
   local message="$*"
   if ((${#message} > 0)); then
