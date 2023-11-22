@@ -79,11 +79,24 @@ function db() { # <-- Wrapper for rebuild db_replica
   rebuild db_replica
 }
 
-function goodbye {
+function goodbye() {
   printf "$fg[green]Delete$reset_color this codespace? (y to confirm)?\n‣ "
   read response
-  # TODO: Do we need this? Or can we just wrap the gh cs command in this function without the prompt?
   [[ $response = "y" ]] && gh cs delete -c $CODESPACE_NAME
+}
+
+function rtest() { # <-- Wrapper to translate path to Rover test paths
+  regex="src\/aplaceforrover\/?(.*)\.py"
+  echo "Running tests in $1"
+
+  if [[ -f $1 ]]; then
+    step1=${string:gs/src\/aplaceforrover\//""}
+    step2=${step1:gs/\.py/""}
+    pythonpath=${step2:gs/\//"."}
+    t $pythonpath
+  else
+    echo "You need to provide a valid path to a file in src/aplaceforrover"
+  fi
 }
 
 function update-staging() { # <-- Wrapper for git push to staging
