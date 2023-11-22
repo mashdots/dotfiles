@@ -86,14 +86,12 @@ function goodbye() {
 }
 
 function rtest() { # <-- Wrapper to translate path to Rover test paths
-  regex="src\/aplaceforrover\/?(.*)\.py"
-  echo "Running tests in $1"
-
   if [[ -f $1 ]]; then
-    step1=${string:gs/src\/aplaceforrover\//""}
+    step1=${1:gs/src\/aplaceforrover\//""}
     step2=${step1:gs/\.py/""}
-    pythonpath=${step2:gs/\//"."}
-    t $pythonpath
+    to_test=${step2:gs/\//"."}
+    echo "Running tests for $to_test"
+    t "$to_test"
   else
     echo "You need to provide a valid path to a file in src/aplaceforrover"
   fi
