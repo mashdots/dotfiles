@@ -111,3 +111,11 @@ function update-branch(){ # <-- Update the current branch with the latest change
     git checkout $CURRENT_BRANCH && git rebase -i origin/master
   fi
 }
+
+function start() {
+  until dc up -d
+  do
+      echo "Trying to start . . ."
+      sleep 1
+  done
+}
