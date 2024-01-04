@@ -118,3 +118,5 @@ function start() {
       sleep 1
   done
 }
+
+start
