@@ -91,6 +91,7 @@ function rtest() { # <-- Wrapper to translate path to Rover test paths
     to_test=${step2:gs/\//"."}
     echo "Running tests for $to_test"
     t "$to_test"
+    echo "For future testing, run 't $to_test'"
   else
     echo "You need to provide a valid path to a file in src/aplaceforrover"
   fi
