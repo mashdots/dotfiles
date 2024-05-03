@@ -31,6 +31,7 @@ alias thisBranch="git branch | grep '^\*' | cut -d' ' -f2" #        shows text f
 alias prs="gh pr list --author mashdots" #                                               list my current PRs in Github #
 alias mypy="dc run --workdir /web --rm --no-deps web mypy --show-error-codes src/aplaceforrover" #            run mypy #
 alias db="rebuild db_replica"
+alias generate_api_schemas="m generate_api_schemas && (cd /workspaces/web/src/frontend/rsdk && yarn run build:apiClient)"
 
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
