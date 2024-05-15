@@ -50,6 +50,19 @@ fi
 
 # ----------------------------------------------------- Functions ------------------------------------------------------
 
+COMMON_COMMANDS=(
+  "m generate_api_schemas          Run this command to generate API schemas"
+  "yarn run build:apiClient        Run this from the frontend/rsdk directory to build the API client after generating API schemas"
+  "rebuild db_replica              Rebuild the database replica"
+)
+
+function help() {
+  printf "$fg[green]Common Commands$reset_color\n"
+  for command in "${COMMON_COMMANDS[@]}"; do
+    echo $command
+  done
+}
+
 function blacken() {
   if [[ -f $1 ]]; then
     black --config ./pyproject.toml $1
