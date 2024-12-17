@@ -29,7 +29,7 @@ eval "$(pyenv init -)"
 
 alias thisBranch="git branch | grep '^\*' | cut -d' ' -f2" #        shows text for current branch of current directory #
 alias prs="gh pr list --author mashdots" #                                               list my current PRs in Github #
-alias mypy="dc run --workdir /web --rm --no-deps web mypy --show-error-codes src/aplaceforrover" #            run mypy #
+alias mypy="dc run --workdir /web --rm --no-deps web mypy --show-error-codes src/aplaceforrover/**/*.py" #    run mypy #
 alias db="rebuild db_replica"
 alias generate_api_schemas="m generate_api_schemas && (cd /workspaces/web/src/frontend/rsdk && yarn run build:apiClient)"
 
