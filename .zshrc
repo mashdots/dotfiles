@@ -2,6 +2,7 @@
 ZSH_THEME="schminitz-v2"
 plugins=(git npm node sudo wd vscode zsh-autosuggestions)
 export ZSH=$HOME/.oh-my-zsh
+export WORKSPACE=${WORKSPACE:-'/workspaces/web'}
 source $ZSH/oh-my-zsh.sh
 
 export NVM_DIR="$HOME/.nvm"
