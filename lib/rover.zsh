@@ -4,7 +4,7 @@
 # Updated: 2025-05-07
 #
 
-function blacken() {
+function blacken() { # <-- Wrapper for black
   if [[ -f $1 ]]; then
     black --config ./pyproject.toml $1
   else
@@ -24,7 +24,7 @@ function darker() { # <-- Wrapper for darker and iSort
   done
 }
 
-function goodbye() {
+function goodbye() { # <-- Delete the current codespace
   printf "$fg[green]Delete$reset_color this codespace? (y to confirm)?\n‣ "
   read response
   [[ $response = "y" ]] && gh cs delete -c $CODESPACE_NAME
@@ -44,7 +44,7 @@ function rtest() { # <-- Wrapper to translate path to Rover test paths
 }
 
 
-function start() {
+function start() { # <-- Start all docker containers
   until dc up -d
   do
       echo "Trying to start . . ."
