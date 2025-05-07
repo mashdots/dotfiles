@@ -1,6 +1,15 @@
 # ------------------------------------------------------ Exports -------------------------------------------------------
 ZSH_THEME="schminitz-v2"
-plugins=(git npm node sudo wd vscode zsh-autosuggestions)
+plugins=(
+  git
+  npm
+  node
+  sudo
+  wd
+  vscode
+  zsh-autosuggestions
+  zshrc.d
+)
 export ZSH=$HOME/.oh-my-zsh
 export WORKSPACE=${WORKSPACE:-'/workspaces/web'}
 source $ZSH/oh-my-zsh.sh

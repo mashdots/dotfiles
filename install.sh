@@ -1,10 +1,12 @@
 #!/bin/sh
 
-zshrc() {
+setup() {
     echo "==========================================================="
     echo "                cloning zsh-autosuggestions                "
     echo "-----------------------------------------------------------"
-    git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/plugins/zsh-autosuggestions
+    ZSH_CUSTOM=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}
+    git clone https://github.com/mattmc3/zshrc.d $ZSH_CUSTOM/plugins/zshrc.d
+    git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 
     echo "==========================================================="
     echo "                     installing theme                      "
@@ -23,4 +25,4 @@ zshrc() {
     cp .zshrc $HOME/.zshrc
 }
 
-zshrc
+setup
