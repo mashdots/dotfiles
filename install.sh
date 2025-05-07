@@ -22,7 +22,7 @@ setup() {
     echo "==========================================================="
     echo "                       import zshrc                        "
     echo "-----------------------------------------------------------"
-    cp lib $HOME/zshrc.d
+    cp -r lib $HOME/zshrc.d
     cp .zshrc $HOME/.zshrc
 }
 
