@@ -25,7 +25,7 @@ setup() {
     HELP_FILE="./lib/help.zsh"
     touch $HELP_FILE
 
-    COMMON_COMMANDS="COMMON_COMMANDS=("
+    COMMON_COMMANDS="export COMMON_COMMANDS=(\n"
 
     for file in lib/*.zsh; do
         while IFS= read -r line; do

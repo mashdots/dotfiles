@@ -23,7 +23,7 @@ export PRE_COMMIT_ENABLED=true
 # Path setup
 export PATHARRAY=(
   "$PYENV_ROOT/bin"
-  "/bin/bash"
+  # "/bin/bash"
   "$HOME/.local/bin"
 )
 declare -a error_paths
