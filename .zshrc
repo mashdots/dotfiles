@@ -25,6 +25,7 @@ export PATHARRAY=(
   "$PYENV_ROOT/bin"
   # "/bin/bash"
   "$HOME/.local/bin"
+  "$WORKSPACE/venv/bin"
 )
 declare -a error_paths
 
@@ -45,3 +46,5 @@ if [[ ${#error_paths[@]} -gt 0 ]]; then
 fi
 
 eval "$(pyenv init -)"
+
+source $WORKSPACE/venv/bin/activate
