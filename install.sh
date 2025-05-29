@@ -22,29 +22,29 @@ setup() {
     echo "==========================================================="
     echo "                  generating help file                     "
     echo "-----------------------------------------------------------"
-    HELP_FILE="./lib/help.zsh"
-    touch $HELP_FILE
+    # HELP_FILE="./lib/help.zsh"
+    # touch $HELP_FILE
 
-    COMMON_COMMANDS="export COMMON_COMMANDS=(\n"
+    # COMMON_COMMANDS="export COMMON_COMMANDS=(\n"
 
-    for file in lib/*.zsh; do
-        while IFS= read -r line; do
-            if [[ "$line" == 'function '* ]]; then
-                function_name=$(echo "$line" | awk '{print $2}' | cut -d'(' -f1)
-                description=$(echo "$line" | sed 's/.*# <-- //')
-                COMMON_COMMANDS+="\n    \"    \$fg[green]$function_name\$reset_color:\\\n        $description\""
-            fi
-        done < "$file"
-    done
+    # for file in lib/*.zsh; do
+    #     while IFS= read -r line; do
+    #         if [[ "$line" == 'function '* ]]; then
+    #             function_name=$(echo "$line" | awk '{print $2}' | cut -d'(' -f1)
+    #             description=$(echo "$line" | sed 's/.*# <-- //')
+    #             COMMON_COMMANDS+="\n    \"    \$fg[green]$function_name\$reset_color:\\\n        $description\""
+    #         fi
+    #     done < "$file"
+    # done
 
-    COMMON_COMMANDS+="\n)"
+    # COMMON_COMMANDS+="\n)"
 
-    echo -e "$COMMON_COMMANDS" > "$HELP_FILE"
+    # echo -e "$COMMON_COMMANDS" > "$HELP_FILE"
 
     echo "==========================================================="
     echo "                       import zshrc                        "
     echo "-----------------------------------------------------------"
-    cp -r lib $HOME/zshrc.d
+    cp -r lib $HOME/.zshrc.d
     cp .zshrc $HOME/.zshrc
 }
 
