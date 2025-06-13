@@ -20,6 +20,18 @@ setup() {
     git clone https://github.com/pyenv/pyenv.git $HOME/.pyenv
 
     echo "==========================================================="
+    echo "                   Setup AWS Credentials                   "
+    echo "-----------------------------------------------------------"
+    function write_aws_saml_credentials {
+        if [[ ! -z "${ROVER_AWS_SAML_HELPER_CREDENTIALS:-}" ]]; then
+            mkdir -p $HOME/.aws
+            echo $ROVER_AWS_SAML_HELPER_CREDENTIALS | base64 -d > $HOME/.aws/credentials
+        fi
+    }
+    # Write credentials on load if possible
+    write_aws_saml_credentials
+
+    echo "==========================================================="
     echo "                  generating help file                     "
     echo "-----------------------------------------------------------"
     # HELP_FILE="./lib/help.zsh"

@@ -43,7 +43,6 @@ function rtest() { # <-- Wrapper to translate path to Rover test paths
   fi
 }
 
-
 function start() { # <-- Start all docker containers
   until dc up -d
   do
@@ -52,3 +51,9 @@ function start() { # <-- Start all docker containers
   done
 }
 
+function write_aws_saml_credentials { # <-- Write AWS SAML credentials to file
+    if [[ ! -z "${ROVER_AWS_SAML_HELPER_CREDENTIALS:-}" ]]; then
+        mkdir -p $HOME/.aws
+        echo $ROVER_AWS_SAML_HELPER_CREDENTIALS | base64 -d > $HOME/.aws/credentials
+    fi
+}
