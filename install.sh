@@ -32,6 +32,15 @@ setup() {
     write_aws_saml_credentials
 
     echo "==========================================================="
+    echo "                       Setup Claude                        "
+    echo "-----------------------------------------------------------"
+    npm install -g @anthropic-ai/claude-code
+    echo "export CLAUDE_CODE_USE_BEDROCK=1" >> $HOME/.zlogin
+    echo "export AWS_PROFILE=dev" >> $HOME/.zlogin
+    echo "export AWS_REGION=us-west-2" >> $HOME/.zlogin  
+    echo "export ANTHROPIC_MODEL=us.anthropic.claude-sonnet-4-20250514-v1:0" >> $HOME/.zlogin
+
+    echo "==========================================================="
     echo "                  generating help file                     "
     echo "-----------------------------------------------------------"
     # HELP_FILE="./lib/help.zsh"

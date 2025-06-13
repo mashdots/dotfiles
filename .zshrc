@@ -19,6 +19,10 @@ export NVM_DIR="$HOME/.nvm"
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PRE_COMMIT_ENABLED=true
+export CLAUDE_CODE_USE_BEDROCK=1
+export AWS_PROFILE=dev
+export AWS_REGION=us-west-2
+export ANTHROPIC_MODEL=us.anthropic.claude-sonnet-4-20250514-v1:0
 
 # Path setup
 export PATHARRAY=(
