@@ -1,7 +1,7 @@
 #
 # Git-related functions and aliases
 #
-# Updated: 2025-05-07
+# Updated: 2025-05-13
 #
 
 function commit() { # <-- Wrapper for git commit with a message for the current branch
@@ -59,43 +59,22 @@ function push() { # <-- Pull from origin repository on the current branch
   git push origin `thisBranch` $FLAG
 }
 
-function update-staging() { # <-- Update a staging branch with the latest changes from master
-  if [[ $PWD != *"$ROVER_WEB_DIR"* ]]
-    then
-      printf "\n$fg[red]You must be in the Rover Web directory to run this command$reset_color\n"
-      return 1
-  fi
-
-  if [[ -z $1 ]]
-    then
-      printf "\n$fg[red]You must provide a staging name to update$reset_color\n"
-      return 1
-  fi
-
-  local staging_to_update=$1
-
-  if [ `git branch -r | grep "staging-$staging_to_update"` ]
-    then
-      local CURRENT_BRANCH=`thisBranch`
-
-      if [[ $CURRENT_BRANCH != $MASTER ]]; then
-        printf "\n$fg[info]Switching to $MASTER for a sec from $CURRENT_BRANCH$reset_color\n"
-        git checkout $MASTER
-      fi
-
-      git pull
-      printf "\n$fg[green]Updating staging-$staging_to_update with the latest changes from $MASTER$reset_color\n"
-      git push --force origin master:staging-$staging_to_update
-
-      if [[ $CURRENT_BRANCH != $MASTER ]]; then
-        printf "\n$fg[info]Switching back to $CURRENT_BRANCH$reset_color\n"
-        git checkout $CURRENT_BRANCH
-      fi
-  else
-    printf "\n$fg[red]The staging branch staging-$staging_to_update does not exist$reset_color\n"
-    return 1
-  fi
+function reset-branch() {
+  git reset --hard origin/`thisBranch`
 }
+
+function reset-master() { # <-- Reset the master branch to the latest commit
+  local CURRENT_BRANCH=`thisBranch`
+
+  if [[ $CURRENT_BRANCH != $MASTER ]]; then
+    printf "\n$fg[info]Switching to $MASTER for a sec from $CURRENT_BRANCH$reset_color\n"
+    git checkout $MASTER
+  fi
+
+  git fetch origin
+  git reset --hard origin/master
+}
+
 
 function update-base(){ # <-- Pull from the main branch and rebase the current branch
   local CURRENT_BRANCH=`thisBranch`
@@ -117,12 +96,33 @@ function update-base(){ # <-- Pull from the main branch and rebase the current b
     MAIN_BRANCH="main"
   fi
 
+  # If there are changes on the current branch, stash them with the current branch name
+  if ! git diff-index --quiet HEAD --; then
+    printf "\n$fg[yellow]Stashing changes on $CURRENT_BRANCH before updating base branch$reset_color\n"
+    git stash push -m "$CURRENT_BRANCH changes before updating base branch" --include-untracked
+  fi
+
   git checkout $MAIN_BRANCH 
   git fetch
   git pull origin $MAIN_BRANCH
 
   if [[ $CURRENT_BRANCH != $MAIN_BRANCH ]]; then
     git checkout $CURRENT_BRANCH && git rebase -i origin/$MAIN_BRANCH
+
+    if [[ $? -ne 0 ]]; then
+      printf "\n$fg[red]Rebase failed. Please resolve conflicts and continue the rebase.$reset_color\n"
+
+      # If there are stashed changes for the branch, tell the user to pop them when finished rebasing
+      if git stash list | grep -q "$CURRENT_BRANCH changes before updating base branch"; then
+        printf "\n$fg[yellow]You have stashed changes for $CURRENT_BRANCH. Please run 'git stash pop' when you are done rebasing.$reset_color\n"
+      fi
+      return 1
+    fi
+
+    if git stash list | grep -q "$CURRENT_BRANCH changes before updating base branch"; then
+      printf "\n$fg[green]Popping stashed changes for $CURRENT_BRANCH after updating base branch$reset_color\n"
+      git stash pop
+    fi
   fi
 }
 

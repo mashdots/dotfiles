@@ -3,12 +3,24 @@
 #
 # Updated: 2025-05-07
 #
+export RAWS_USE_DEVICE_CODE=0
+export LAST_RAWS_LOGIN_FILE="$HOME/last_raws_login"
+
 
 function blacken() { # <-- Wrapper for black
   if [[ -f $1 ]]; then
     black --config ./pyproject.toml $1
   else
-    printf "$fg[red]WHOOPS$reset_color - you need to provide a file to format.\n"
+    # Get list of changed files via git diff and assign to an array, filtering out non-Python files
+    local changed_files=($(git diff --name-only | grep -E '\.py$'))
+
+    if [[ ${#changed_files[@]} -gt 0 ]]; then
+      for file in "${changed_files[@]}"; do
+        black --config ./pyproject.toml $file
+      done
+    else
+      printf "$fg[red]WHOOPS$reset_color - no Python files to format.\n"
+    fi
   fi
 }
 
@@ -57,3 +69,27 @@ function write_aws_saml_credentials() { # <-- Write AWS SAML credentials to file
         echo "$ROVER_AWS_SAML_HELPER_CREDENTIALS" | base64 -d > "$HOME"/.aws/credentials
     fi
 }
+
+function maybe-login-raws() { # <-- Log in to RAWS if it has been more than 24 hours since the last login
+  local NOW=$(date +%s)
+  local LAST_LOGIN=0
+
+  if [[ -f $LAST_RAWS_LOGIN_FILE ]]; then
+    LAST_LOGIN=$(cat $LAST_RAWS_LOGIN_FILE)
+  else
+    echo 0 >| $LAST_RAWS_LOGIN_FILE
+  fi
+
+  local DIFF=$(( (NOW - LAST_LOGIN) / 3600 ))
+
+  if (( DIFF >= 23 )); then
+    printf "\n$fg[green]Logging in to RAWS$reset_color\n"
+    ~/.local/bin/raws profile dev
+    echo $NOW >| $LAST_RAWS_LOGIN_FILE
+  elif (( DIFF >= 20 )); then
+    printf "\n$fg[blue]Last RAWS login was $DIFF hours ago. Log in will be triggered soon$reset_color\n"
+  fi
+}
+
+maybe-login-raws
+
