@@ -1,13 +1,37 @@
 #
 # Git-related functions and aliases
 #
-# Updated: 2025-05-13
+# Updated: 2025-11-11
 #
 
 function commit() { # <-- Wrapper for git commit with a message for the current branch
+  local should_push=false
+  local flags
+
+  for arg in "$@"; do
+    if [[ $arg == "-p" || $arg == "--push" ]]; then
+      should_push=true
+      shift
+    fi
+
+    if [[ $arg = "-f" ]]; then
+      # If the first argument is '-f', prepend "--no-verify" to the flags
+      flags="--no-verify"
+      shift
+    fi
+  done
+
+  
   local message="$*"
   if ((${#message} > 0)); then
-    git commit -m "[`thisBranch`] $message"
+    flags+=" -m"
+    git_command="git commit $flags \"[\`thisBranch\`] $message\""
+
+    eval $git_command
+
+    if [[ $should_push = true ]]; then
+      push
+    fi
   else
     echo "you need to append a commit message"
   fi
