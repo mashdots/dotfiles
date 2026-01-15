@@ -95,7 +95,7 @@ function git-new() { # <-- Given a new branch name, will pull and fetch from the
 function pull() { # <-- Pull from origin repository on the current branch
   if [[ $1 = "-s" ]]; then
     printf "\n$fg[info]Stashing changes before pulling from `thisBranch`$reset_color\n"
-    git stash -U
+    git stash -u
   fi
 
   git pull origin `thisBranch`
