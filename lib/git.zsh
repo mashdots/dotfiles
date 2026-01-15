@@ -37,6 +37,32 @@ function commit() { # <-- Wrapper for git commit with a message for the current 
   fi
 }
 
+function get-jira-description() { # <-- Using the JIRA_API_TOKEN environment variable query JIRA for the issue description
+  local JIRA_ISSUE=$1
+  local JIRA_BASE_URL="https://roverdotcom.atlassian.net"
+
+  if [[ -z $JIRA_API_TOKEN ]]; then
+    printf "\n$fg[red]JIRA_API_TOKEN environment variable is not set$reset_color\n"
+    return 1
+  fi
+
+  if [[ -z $JIRA_ISSUE ]]; then
+    printf "\n$fg[red]You must provide a JIRA issue key (e.g., PROJ-123)$reset_color\n"
+    return 1
+  fi
+
+  local RESPONSE=$(curl -s --request GET --url "$JIRA_BASE_URL/rest/api/3/issue/$JIRA_ISSUE" --user "josh.hembree@rover.com:$JIRA_API_TOKEN" --header "Accept: application/json" )
+
+  printf "Before:\n%s\n" "$(echo $RESPONSE | jq -r '.fields.summary')"
+  # Remove any non-word or non-number characters from the summary, and reformat in kebab-case
+  # Trim the string so the beginning and end only start with alphanumeric characters
+  trimmed_summary=$(echo $RESPONSE | jq -r '.fields.summary' | sed 's/[^\w*]//;s/[\W*^]//' | sed 's/[\W*]/"-"/' | tr ' ' '-' | tr '[:upper:]' '[:lower:]' | tr -s '-')
+  
+  echo "After:\n$trimmed_summary"
+
+  return $(echo $RESPONSE | jq -r '.fields.summary')
+}
+
 function git-new() { # <-- Given a new branch name, will pull and fetch from the main branch, then create a new one
   local NEW_BRANCH=$1
   shift
@@ -67,7 +93,17 @@ function git-new() { # <-- Given a new branch name, will pull and fetch from the
 }
 
 function pull() { # <-- Pull from origin repository on the current branch
+  if [[ $1 = "-s" ]]; then
+    printf "\n$fg[info]Stashing changes before pulling from `thisBranch`$reset_color\n"
+    git stash -U
+  fi
+
   git pull origin `thisBranch`
+
+  if [[ $1 = "-s" ]]; then
+    printf "\n$fg[info]Popping stashed changes after pulling from `thisBranch`$reset_color\n"
+    git stash pop
+  fi
 }
 
 function push() { # <-- Pull from origin repository on the current branch
