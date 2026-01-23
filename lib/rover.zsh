@@ -21,7 +21,7 @@ function maybe-login-raws() { # <-- Log in to RAWS if it has been more than 24 h
 
   if (( DIFF >= 23 )); then
     printf "\n$fg[green]Logging in to RAWS$reset_color\n"
-    ~/.local/bin/raws profile dev
+    raws profile dev
     echo $NOW >| $LAST_RAWS_LOGIN_FILE
   elif (( DIFF >= 20 )); then
     printf "\n$fg[blue]Last RAWS login was $DIFF hours ago. Log in will be triggered soon$reset_color\n"
@@ -79,7 +79,6 @@ function rtest() { # <-- Wrapper to translate path to Rover test paths
 
 function start() { # <-- Start all docker containers
   maybe-login-raws
-
 
   until dc up -d
   do
