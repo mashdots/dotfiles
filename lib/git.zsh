@@ -92,15 +92,32 @@ function git-new() { # <-- Given a new branch name, will pull and fetch from the
   git checkout -b $NEW_BRANCH
 }
 
+
 function pull() { # <-- Pull from origin repository on the current branch
-  if [[ $1 = "-s" ]]; then
+  should_stash=false
+  should_fetch=false
+
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -s) should_stash=true; shift;;
+      -f) should_fetch=true; shift;;
+      *) break;;
+    esac
+  done
+
+  if [[ $should_stash = true ]]; then
     printf "\n$fg[info]Stashing changes before pulling from `thisBranch`$reset_color\n"
     git stash -u
   fi
 
   git pull origin `thisBranch`
 
-  if [[ $1 = "-s" ]]; then
+  if [[ $should_fetch = true ]]; then
+    printf "\n$fg[info]Fetching latest changes from origin before pulling from `thisBranch`$reset_color\n"
+    git fetch origin
+  fi
+  
+  if [[ $should_stash = true ]]; then
     printf "\n$fg[info]Popping stashed changes after pulling from `thisBranch`$reset_color\n"
     git stash pop
   fi
@@ -189,4 +206,22 @@ function update-base(){ # <-- Pull from the main branch and rebase the current b
 function update-branch(){ # <-- Update the current branch from the origin
   git pull origin `thisBranch`
   git fetch
+}
+
+function revert-file(){ # <-- Revert a file to the last committed state based on the main branch, or a given branch name
+  local FILE_PATH=$1
+  local BASE_BRANCH=${2:-master}
+
+  # If main exists, use that instead of master
+  if git show-ref --verify --quiet refs/heads/main; then
+    BASE_BRANCH="main"
+  fi
+
+  if [[ -z $FILE_PATH ]]; then
+    printf "\n$fg[red]You must provide a file path to revert$reset_color\n"
+    return 1
+  fi
+
+  git fetch origin
+  git checkout origin/$BASE_BRANCH -- $FILE_PATH
 }
