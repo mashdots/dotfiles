@@ -56,6 +56,7 @@ setup() {
     cp -r lib "$HOME"/.zshrc.d
     cp .zshrc "$HOME"/.zshrc
     mkdir "$HOME"/.dotfiles
+    chmod 777 "$HOME"/.dotfiles
 }
 
 setup

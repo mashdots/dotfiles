@@ -1,3 +1,10 @@
+export DOTFILE_CONFIG="$HOME/.dotfiles"
+export PRE_COMMIT_ENABLED=true
+export CLAUDE_CODE_USE_BEDROCK=1
+export AWS_PROFILE=dev
+export AWS_REGION=us-west-2
+export ANTHROPIC_MODEL=us.anthropic.claude-sonnet-4-20250514-v1:0
+
 alias thisBranch="git branch | grep '^\*' | cut -d' ' -f2" #        shows text for current branch of current directory #
 alias prs="gh pr list --author mashdots" #                                               list my current PRs in Github #
 alias mypy="dc run --workdir /web --rm --no-deps web mypy --show-error-codes src/aplaceforrover/**/*.py" #    run mypy #
