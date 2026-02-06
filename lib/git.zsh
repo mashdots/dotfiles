@@ -60,7 +60,7 @@ function check_master_freshness() {
   echo $is_hash_updated
 }
 
-function get-jira-description() { # <-- Using the JIRA_API_TOKEN environment variable query JIRA for the issue description
+function get_jira_description() { # <-- Using the JIRA_API_TOKEN environment variable query JIRA for the issue description
   local jira_issue=$1
   local jira_base_url="https://roverdotcom.atlassian.net"
 
@@ -96,7 +96,7 @@ function get_main_branch() { # <-- Return the name of the main branch, whether i
   echo $main_branch
 }
 
-function git-new() { # <-- Given a new branch name, will pull and fetch from the main branch, then create a new one
+function git_new() { # <-- Given a new branch name, will pull and fetch from the main branch, then create a new one
   local new_branch=$1
   shift
   local args=$1
@@ -164,11 +164,11 @@ function push() { # <-- Pull from origin repository on the current branch
   git push origin `thisBranch` $flag
 }
 
-function reset-branch() {
+function reset_branch() {
   git reset --hard origin/`thisBranch`
 }
 
-function reset-master() { # <-- Reset the master branch to the latest commit
+function reset_master() { # <-- Reset the master branch to the latest commit
   local current_branch=`thisBranch`
   local main_branch=$(get_main_branch)
 
@@ -182,7 +182,7 @@ function reset-master() { # <-- Reset the master branch to the latest commit
 }
 
 
-function update-base(){ # <-- Pull from the main branch and rebase the current branch
+function update_base(){ # <-- Pull from the main branch and rebase the current branch
   local current_branch=`thisBranch`
   local main_branch=$(get_main_branch)
   local base_branch=$1
@@ -231,12 +231,12 @@ function update-base(){ # <-- Pull from the main branch and rebase the current b
   fi
 }
 
-function update-branch(){ # <-- Update the current branch from the origin
+function update_branch(){ # <-- Update the current branch from the origin
   git pull origin `thisBranch`
   git fetch
 }
 
-function revert-file(){ # <-- Revert a file to the last committed state based on the main branch, or a given branch name
+function revert_file(){ # <-- Revert a file to the last committed state based on the main branch, or a given branch name
   local main_branch=$(get_main_branch)
   local file_path=$1
   local base_branch=${2:-$main_branch}
