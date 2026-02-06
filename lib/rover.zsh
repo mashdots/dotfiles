@@ -10,7 +10,6 @@ export LAST_RAWS_LOGIN_FILE="$DOTFILE_CONFIG/last_raws_login"
 function maybe_login_raws() { # <-- Log in to RAWS if it has been more than 24 hours since the last login
   local now=$(date +%s)
   local last_login=0
-  ls -la $LAST_RAWS_LOGIN_FILE
 
   if [[ -f $LAST_RAWS_LOGIN_FILE ]]; then
     last_login=$(cat $LAST_RAWS_LOGIN_FILE)
