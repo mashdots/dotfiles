@@ -57,6 +57,7 @@ setup() {
     cp .zshrc "$HOME"/.zshrc
     mkdir "$HOME"/.dotfiles
     chmod 777 "$HOME"/.dotfiles
+    cat CLAUDE.md >> /workspaces/web/AGENTS.md
 }
 
 setup
