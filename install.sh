@@ -58,7 +58,7 @@ setup() {
     mv /workspaces/.mcp-sample.json /workspaces/.mcp.json
     mkdir "$HOME"/.dotfiles
     chmod 777 "$HOME"/.dotfiles
-    cat CLAUDE.md >> /workspaces/web/AGENTS.md
+    cat AGENTS.md >> /workspaces/web/AGENTS.md
 }
 
 setup
