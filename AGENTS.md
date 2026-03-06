@@ -3,7 +3,7 @@
 
 When changes are made by an AI agent, we want to keep track of the total amount of contribution in a body of work by said agent. To facilitate this, do the following:
 
-- If it doesn't already exist, create a new document in the root called `AI-DIFF` that contains every line of code changed by the AI.
+- If it doesn't already exist, create a new document in `.cache/` called `AI-DIFF` that contains every line of code changed by the AI.
 - Whenever the current user allows you to make any changes to code, after all the changes in a single request are made, update `AI-DIFF` with the changes:
   - For each line, include the file path, line number, and the new line of code.
   - If a line was deleted, include the original line of code with a note that it was deleted.
