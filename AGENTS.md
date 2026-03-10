@@ -11,5 +11,5 @@ When changes are made by an AI agent, we want to keep track of the total amount 
   - If a line was modified, include both the original and new lines of code with notes indicating which is which.
 - This will allow for easy review of all changes made by the AI in one place.
 
-- Whenever `AI-DIFF` is updated, compare it to the Git Diff and the original code, then calculate the percentage of lines that were added, deleted, or modified by the AI compared to the total lines of code in the changed files. This should all filter down to a single percentage number that represents the AI's contribution to the code changes.
+- Whenever `AI-DIFF` is updated, calculate the percentage of lines in the git diff that were authored by the AI versus by the human. This should be a single percentage: `(AI-changed lines / total changed lines in the diff) * 100`.
 - Whenever you finish a task, give an update that includes the total percentage of code contributed by the agent.
