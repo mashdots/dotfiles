@@ -56,7 +56,7 @@ setup() {
     cp -r lib "$HOME"/.zshrc.d
     cp .zshrc "$HOME"/.zshrc
     # mv /workspaces/.mcp-sample.json /workspaces/.mcp.json
-    mkdir "$HOME"/.dotfiles
+    # mkdir "$HOME"/.dotfiles
     chmod 777 "$HOME"/.dotfiles
     cat AGENTS.md >> /workspaces/web/AGENTS.md
 }
