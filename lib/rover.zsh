@@ -88,10 +88,10 @@ function goodbye() { # <-- Delete the current codespace
 #   if $only_typescript; then
 #     m generate_api_schemas
 #   elif $only_python; then
-#     (cd /workspaces/web/src/frontend/rsdk && yarn run build:apiClient)
+#     (cd /workspaces/web/src/frontend/rsdk && pnpm run build:apiClient)
 #     m generate_api_schemas
 #   else
-#     m generate_api_schemas && (cd /workspaces/web/src/frontend/rsdk && yarn run build:apiClient)
+#     m generate_api_schemas && (cd /workspaces/web/src/frontend/rsdk && pnpm run build:apiClient)
 #   fi
   
 #   if $only_python; then
