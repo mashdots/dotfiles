@@ -1,4 +1,3 @@
-export DOTFILE_CONFIG="$HOME/.dotfiles"
 export PRE_COMMIT_ENABLED=true
 export CLAUDE_CODE_USE_BEDROCK=1
 export AWS_PROFILE=dev

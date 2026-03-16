@@ -3,7 +3,7 @@
 #
 # Updated: 2025-11-11
 #
-export LAST_MASTER_HASH_FILE="$DOTFILE_CONFIG/last_master_hash"
+export LAST_MASTER_HASH_FILE="$HOME/last_master_hash"
 
 
 function commit() { # <-- Wrapper for git commit with a message for the current branch
