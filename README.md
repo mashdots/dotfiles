@@ -5,3 +5,6 @@ When updating `install.sh`, be sure to make it runnable by the codespace by comm
 ``` shell
 ‣ git add install.sh --chmod=+x
 ```
+
+> [!NOTE]
+> Dotfiles are installed at `/workspaces/.codespaces/.persistedshare/dotfiles`

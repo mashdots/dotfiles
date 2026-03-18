@@ -55,6 +55,8 @@ setup() {
     echo "-----------------------------------------------------------"
     cp -r lib "$HOME"/.zshrc.d
     cp .zshrc "$HOME"/.zshrc
+    cp ./lib/skills/* /workspaces/web/.claude/skills/
+
     cat AGENTS.md >> /workspaces/web/AGENTS.md
 }
 
