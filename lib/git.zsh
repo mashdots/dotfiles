@@ -1,8 +1,6 @@
-#
+###
 # Git-related functions and aliases
-#
-# Updated: 2025-11-11
-#
+###
 export LAST_MASTER_HASH_FILE="$HOME/last_master_hash"
 
 

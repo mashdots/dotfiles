@@ -1,11 +1,9 @@
-#
+###
 # Functions and methods that are specific to Rover.
-#
-# Updated: 2026-02-05
-#
+###
 export RAWS_USE_DEVICE_CODE=0
 export LAST_RAWS_LOGIN_FILE="$HOME/last_raws_login"
-
+export ANTHROPIC_MODEL="opus"
 
 function maybe_login_raws() { # <-- Log in to RAWS if it has been more than 24 hours since the last login
   local now=$(date +%s)
