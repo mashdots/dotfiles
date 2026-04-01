@@ -57,7 +57,7 @@ setup() {
     cp .zshrc "$HOME"/.zshrc
     cp -r ./lib/skills/* /workspaces/web/.claude/skills/
 
-    cat AGENTS.md >> /workspaces/web/AGENTS.md
+    cat CLAUDE.md >> /workspaces/web/CLAUDE.md
 }
 
 setup
